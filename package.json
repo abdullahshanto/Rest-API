@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev" : "nodemon server.ts"
+    "dev": "nodemon --exec tsx server.ts"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,9 @@
   "homepage": "https://github.com/abdullahshanto/Rest-API#readme",
   "devDependencies": {
     "@types/node": "^26.1.2",
+    "eslint": "^10.8.0",
     "nodemon": "^3.1.14",
-    "ts-node": "^10.9.2",
+    "tsx": "^4.23.1",
     "typescript": "^7.0.2"
   }
 }
