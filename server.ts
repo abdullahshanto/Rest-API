@@ -1,1 +1,2 @@
-console.log("welcome to rest api")
+console.log("welcome to rest api");
+
