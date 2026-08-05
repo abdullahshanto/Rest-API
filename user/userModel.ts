@@ -1,5 +1,4 @@
-import mongoose, { Schema, type Document } from 'mongoose';
-import type { User } from './userTypes.js';
+import mongoose, { type Document } from 'mongoose';
 
 interface IUser extends Document {
   name: string;
