@@ -7,6 +7,4 @@ import { createUser, loginUser } from './userController.js';
  userRouter.post("/register",createUser)
  userRouter.post("/login", loginUser)
 
-
-
  export default userRouter;
