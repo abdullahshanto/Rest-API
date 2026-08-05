@@ -2,6 +2,7 @@ import type { NextFunction, Request, Response } from "express"
 import createHttpError from "http-errors";
 import user from "./userModel.js";
 import User from "./userModel.js";
+import bcrypt from "bcryptjs";
 
 
  const createUser = async (req:Request , res: Response , next: NextFunction)=>{
@@ -28,6 +29,9 @@ import User from "./userModel.js";
     return next(error);
   }
 
+  //hashing password(using bcryptjs) 
+
+   const hashedPassword = await bcrypt.hash(password, 10);
  
  }
 
