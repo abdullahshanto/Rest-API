@@ -1,5 +1,7 @@
 import type { NextFunction, Request, Response } from "express"
 import createHttpError from "http-errors";
+import user from "./userModel.js";
+import User from "./userModel.js";
 
 
  const createUser = async (req:Request , res: Response , next: NextFunction)=>{
@@ -17,11 +19,16 @@ import createHttpError from "http-errors";
     return next(error);
   }
 
+  //database call
+  const createdUser = await User.create({ name, email, password });
+  if(!createdUser)
+  {
+    const error = createHttpError(400 ,"user already exist");
 
+    return next(error);
+  }
 
-  res.json({
-    message : "user created"
-  })
+ 
  }
 
  export {createUser};
