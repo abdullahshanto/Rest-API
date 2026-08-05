@@ -5,6 +5,12 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 const createUser = async (req: Request, res: Response, next: NextFunction) => {
+  // Check if req.body exists and is an object
+  if (!req.body || typeof req.body !== 'object' || Array.isArray(req.body)) {
+    const error = createHttpError(400, "Request body is required");
+    return next(error);
+  }
+
   const { name, email, password } = req.body;
 
   // validation
@@ -14,19 +20,19 @@ const createUser = async (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    // hash password before saving (previous code created user with plain text password first, then again with hash)
+    // hash password before saving 
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // single create call with hashed password
     const newUser = await User.create({ name, email, password: hashedPassword });
 
-    // generate JWT token (fixed: was using undefined `sign()` and `config.jssecret`)
+    // generate JWT token
     const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET as string, { expiresIn: "1h" });
 
-    // send response (previous code never called res.json — client request hung)
+    // send response 
     return res.status(201).json({ user: newUser, token });
   } catch (err: any) {
-    // handle duplicate email (code 11000) — previous `!createdUser` check never worked
+    // handle duplicate email (code 11000) 
     if (err.code === 11000) {
       const error = createHttpError(409, "user already exists");
       return next(error);
