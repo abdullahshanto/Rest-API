@@ -1,34 +1,36 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
+import { Book } from "./bookTypes";
 
-const bookSchema = new mongoose.Schema(
-  {
-    title: {
-      type: String,
-      required: [true, 'title is required'],
-      trim: true,
+const bookSchema = new mongoose.Schema<Book>(
+    {
+        title: {
+            type: String,
+            required: true,
+        },
+        description: {
+            type: String,
+            require: true,
+        },
+        author: {
+            type: mongoose.Schema.Types.ObjectId,
+            // add ref
+            ref: "User",
+            required: true,
+        },
+        coverImage: {
+            type: String,
+            required: true,
+        },
+        file: {
+            type: String,
+            requied: true,
+        },
+        genre: {
+            type: String,
+            required: true,
+        },
     },
-    author: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-      required: [true, 'author is required'],
-    },
-    genre: {
-      type: String,
-      required: [true, 'genre is required'],
-      trim: true,
-    },
-    coverImage: {
-      type: String,
-      required: [true, 'cover image is required'],
-    },
-    file: {
-      type: String,
-      required: [true, 'file is required'],
-    },
-  },
-  {
-    timestamps: true,
-  }
+    { timestamps: true }
 );
 
-export default mongoose.model('Book', bookSchema);
+export default mongoose.model<Book>("Book", bookSchema);
